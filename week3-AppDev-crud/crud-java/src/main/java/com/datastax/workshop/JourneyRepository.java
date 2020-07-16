@@ -1,6 +1,7 @@
 package com.datastax.workshop;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -15,7 +16,6 @@ import com.datastax.oss.driver.api.core.cql.SimpleStatement;
 import com.datastax.oss.driver.api.core.data.UdtValue;
 import com.datastax.oss.driver.api.core.type.UserDefinedType;
 import com.datastax.oss.driver.api.core.uuid.Uuids;
-import com.datastax.oss.driver.shaded.guava.common.base.Optional;
 
 /**
  * CRUD Operations on a journey.
@@ -30,10 +30,6 @@ public class JourneyRepository implements DataModelConstants {
     /** Interaction with Cassandra. */
     private CqlSession cqlSession;
     
-    
-    
-    
-    
     /**
      * Inject Session in constructor.
      *
@@ -42,6 +38,7 @@ public class JourneyRepository implements DataModelConstants {
      */
     public JourneyRepository(CqlSession cqlSession) {
         this.cqlSession = cqlSession;
+        createSchema(cqlSession);
     }
     
     /**
@@ -56,11 +53,8 @@ public class JourneyRepository implements DataModelConstants {
      *  select journey_id, spacecraft_name,summary,start,end,active from killrvideo.spacecraft_journey_catalog; 
      */
     public UUID create(String spacecraft, String journeySummary) {
-        String insertQuery = 
-                "INSERT INTO spacecraft_journey_catalog (spacecraft_name, journey_id, active, summary) "
-              + "VALUES(?,?,?,?)";
         UUID journeyId =  Uuids.timeBased();
-        cqlSession.execute(SimpleStatement.builder(insertQuery)
+        cqlSession.execute(SimpleStatement.builder(SOLUTION_INSERT)
                 .addPositionalValue(spacecraft)
                 .addPositionalValue(journeyId)
                 .addPositionalValue(Boolean.FALSE)
@@ -81,10 +75,7 @@ public class JourneyRepository implements DataModelConstants {
      *  select journey_id, spacecraft_name,summary,start,end,active from killrvideo.spacecraft_journey_catalog; 
      */
     public void takeoff(UUID journeyId, String spacecraft) {
-        cqlSession.execute(SimpleStatement.builder(
-                "UPDATE spacecraft_journey_catalog "
-                + "SET active=true, start=? "
-                + "WHERE spacecraft_name=? AND journey_id=?")
+        cqlSession.execute(SimpleStatement.builder(SOLUTION_TAKEOFF)
                 .addPositionalValue(Instant.now())
                 .addPositionalValue(spacecraft)
                 .addPositionalValue(journeyId)
@@ -164,10 +155,7 @@ public class JourneyRepository implements DataModelConstants {
     }
     
     public void landing(UUID journeyId, String spacecraft) {
-        cqlSession.execute(SimpleStatement.builder(
-                "UPDATE spacecraft_journey_catalog "
-                + "SET active=false, end=? "
-                + "WHERE spacecraft_name=? AND journey_id=?")
+        cqlSession.execute(SimpleStatement.builder(SOLUTION_LANDING)
                 .addPositionalValue(Instant.now())
                 .addPositionalValue(spacecraft)
                 .addPositionalValue(journeyId)
@@ -212,14 +200,12 @@ public class JourneyRepository implements DataModelConstants {
     }
     
     public Optional<Journey> find(UUID journeyId, String spacecraft) {
-        ResultSet rs = cqlSession.execute(SimpleStatement.builder(
-                "SELECT * FROM spacecraft_journey_catalog "
-               + "WHERE spacecraft_name=? AND journey_id=?")
+        ResultSet rs = cqlSession.execute(SimpleStatement.builder(SOLUTION_READ_JOURNEY)
                 .addPositionalValue(spacecraft)
                 .addPositionalValue(journeyId)
                 .build());
         // We query with full primary key
-        return Optional.fromNullable(mapJourney(rs.one()));
+        return Optional.ofNullable(mapJourney(rs.one()));
     }
     
     public static  Journey mapJourney(Row row) {
@@ -233,5 +219,24 @@ public class JourneyRepository implements DataModelConstants {
         j.setId(row.getUuid(JOURNEY_ID));
         return j;
     }
-
+    
+    // == SOLUTIONS ==
+    
+    private static final String SOLUTION_INSERT = 
+            "INSERT INTO spacecraft_journey_catalog (spacecraft_name, journey_id, active, summary) "
+          + "VALUES(?,?,?,?)";
+    
+    private static final String SOLUTION_TAKEOFF =
+            "UPDATE spacecraft_journey_catalog "
+                    + "SET active=true, start=? "
+                    + "WHERE spacecraft_name=? AND journey_id=?";
+    
+    private static final String SOLUTION_LANDING = 
+            "UPDATE spacecraft_journey_catalog "
+                    + "SET active=false, end=? "
+                    + "WHERE spacecraft_name=? AND journey_id=?";
+    
+    private static final String SOLUTION_READ_JOURNEY =
+            "SELECT * FROM spacecraft_journey_catalog "
+                    + "WHERE spacecraft_name=? AND journey_id=?";
 }
