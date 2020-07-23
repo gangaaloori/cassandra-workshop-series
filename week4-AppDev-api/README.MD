@@ -2,13 +2,13 @@
 
 # ✨ Application Development  - API  REST✨
 
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DataStax-Academy/cassandra-workshop-series/tree/master/week3-AppDev-crud) 
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/DataStax-Academy/cassandra-workshop-series/tree/master/week4-AppDev-api) 
 [![License Apache2](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Discord](https://img.shields.io/discord/685554030159593522)](https://discord.com/widget?id=685554030159593522&theme=dark)
 
 `Cassandra Workshop Series` are an interactive experience. Datastax Developer Advocates share some knowledge about Apache Cassandra™ NoSQL database and how you build Cloud Native applications. You interact with them through chats *([youtube](https://www.youtube.com/channel/UCAIQY251avaMv7bBv5PCo-A) and [discord](https://discord.com/widget?id=685554030159593522&theme=dark))*, quizzes (menti.com), and exercises. 
 
-In this repository, you'll find everything you need related to `week 3` of the **Cassandra Worskhop Series**. For simplicity all exercise instructions will be listed in a single `README` for each language: Java, Javascript, Python, CSharp. We recommended you to have some previous experience with the language you choose. 
+In this repository, you'll find everything you need related to `week 4` of the **Cassandra Worskhop Series**. For simplicity all exercise instructions will be listed in a single `README` for each language: Java, Javascript, Python, CSharp. We recommended you to have some previous experience with the language you choose. 
 
 Now if you are NOT familiar with any of those, we recommended to use Python, the is the simplest. Ready ? go !
 
@@ -16,12 +16,12 @@ Now if you are NOT familiar with any of those, we recommended to use Python, the
 
 | Materials  | Description and Links
 |---|---|
-| Slidedeck | [SLIDEDECK](./materials/presentation-week3.pdf) |
+| Slidedeck | [SLIDEDECK](./materials/presentation-week4.pdf) |
 | Chat with us on Discord | [DISCORD](https://bit.ly/cassandra-workshop) |
 | Ask Question during week | [COMMUNITY](https://community.datastax.com/spaces/172/index.html) |
-| Recording LIVESTREAM NA, LATAM |  📅 [July 22th 12EDT](#) |
-| Recording LIVESTREAM APAC, EMEA | 📅 [July 23th 12:30 IST](#) |
-| Homework | [here](#) |
+| Recording LIVESTREAM NA, LATAM |  📅 [July 22th 12EDT](https://youtu.be/MiR9ibjr7Fw) |
+| Recording LIVESTREAM APAC, EMEA | 📅 [July 23th 12:30 IST](https://youtu.be/jUPKrXO9_NU) |
+| Homework | [here](https://community.datastax.com/questions/6738/materials-and-homework-for-week-4.html) |
 
 ## Table of Contents
 
@@ -62,9 +62,9 @@ Creation of `CqlSession` objects within an application is an expensive process a
 @@ ONLINE in GITPOD @@ 
 ```
 
-**✅  Open gitpod** : [Gitpod](https://www.gitpod.io/) is an IDE 100% online based on Eclipse Theia. To initialize your environment simply click on the button below *(CTRL + Click to open in new tab)*
+**✅  Open gitpod** : [Gitpod](http://www.gitpod.io/?utm_source=datastax&utm_medium=referral&utm_campaign=datastaxworkshops) is an IDE 100% online based on Eclipse Theia. To initialize your environment simply click on the button below *(CTRL + Click to open in new tab)*
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/DataStax-Academy/cassandra-workshop-series)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/DataStax-Academy/cassandra-workshop-series/week4-AppDev-api)
 
 Target url looks like  `https://<your_uid>.<your_region>.gitpod.io/#/workspace/cassandra-workshop-series`. These URL's are dynamic and we cannot provide clickable links in advance. You will need to copy-paste `<your_uid>.<your_region>` as we will insert them in each URL during the exercises.
 
